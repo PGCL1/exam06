@@ -6,7 +6,7 @@
 /*   By: glacroix <PGCL>                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:17:01 by glacroix          #+#    #+#             */
-/*   Updated: 2025/04/29 00:59:47 by glacroix         ###   ########.fr       */
+/*   Updated: 2025/04/29 01:30:54 by glacroix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,9 +155,9 @@ int main(int argc, char **argv)
 	servaddr.sin_port = htons(atoi(argv[1])); 
   
 	// Binding newly created socket to given IP and verification 
-	if ((bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr)))) 
+	if (bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) 
 			fatal_error();
-	if (listen(sockfd, SOMAXCONN)) 	
+	if (listen(sockfd, SOMAXCONN) < 0) 	
 		fatal_error();	
 	while (1)
 	{
