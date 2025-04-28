@@ -6,7 +6,7 @@
 /*   By: glacroix <PGCL>                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:17:01 by glacroix          #+#    #+#             */
-/*   Updated: 2025/04/24 00:31:14 by glacroix         ###   ########.fr       */
+/*   Updated: 2025/04/29 00:59:47 by glacroix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,13 @@ void fatal_error()
 		write(2, "Fatal error\n", 12);
 	   	exit(1);	
 }
-void remove_client(int fd);
 
 void send_broadcast(int author, char *msg)
 {
 		for (int fd = 0; fd <= max_fd; fd++)
 		{
 				if (FD_ISSET(fd, &write_set) && fd != author)
-				{
-						int err = send(fd, msg, strlen(msg), 0);
-						if (err < 0)
-						{
-								remove_client(fd);
-						}
-				}			
+						send(fd, msg, strlen(msg), 0);
 		}	
 }
 
@@ -129,8 +122,9 @@ void send_msg(int fd)
 
 		while (extract_message(&msgs[fd], &msg))
 		{
-				sprintf(buffer_write, "client %d: %s", ids[fd], msg);
+				sprintf(buffer_write, "client %d: ", ids[fd]);
 				send_broadcast(fd, buffer_write);
+				send_broadcast(fd, msg);
 				free(msg);
 		}
 }
