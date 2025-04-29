@@ -6,7 +6,7 @@
 /*   By: glacroix <PGCL>                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:17:01 by glacroix          #+#    #+#             */
-/*   Updated: 2025/04/29 01:30:54 by glacroix         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:32:19 by glacroix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,9 +184,7 @@ int main(int argc, char **argv)
 					else
 					{
 						int read_bytes = recv(fd, buffer_read, 1000, 0);
-						if (read_bytes == -1)
-							   fatal_error();
-						else if (read_bytes == 0)
+						if (read_bytes <= 0)
 						{
 							remove_client(fd);
 							break;
